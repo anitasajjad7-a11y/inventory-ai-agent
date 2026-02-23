@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Inventory BI Assistant</title>
+</head>
+<body style="font-family: Arial; padding: 40px;">
+
+    <h2>Inventory Dashboard</h2>
+
+    <input type="text" id="question" placeholder="Ask your question..." style="width:300px;">
+    <button onclick="askQuestion()">Ask</button>
+
+    <h3>Answer:</h3>
+    <pre id="response"></pre>
+
+<script>
+function askQuestion() {
+    let userInput = document.getElementById("question").value;
+
+    fetch("/ask", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ question: userInput })
+    })
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById("response").innerText = data.answer;
+    })
+    .catch(error => console.error("Error:", error));
+}
+</script>
+
+</body>
+</html>
